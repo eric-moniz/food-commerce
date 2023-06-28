@@ -66,7 +66,7 @@ export const Container = styled.aside`
 
             background-color: ${({ theme }) => theme.colors.yellow};
             width: 5px;
-            height: calc(100%+10px);
+            height: calc(100% + 10px);
 
             border-radius: 0 5px 5px 0;
           }
