@@ -45,7 +45,7 @@ export function SideBar() {
           <li>
             <NavLink to='ice-creams'>
               <IceCreamIcon />
-              <span>Sobremesas</span>
+              <span>Sorvetes</span>
             </NavLink>
           </li>
         </ul>
