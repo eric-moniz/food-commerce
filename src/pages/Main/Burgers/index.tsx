@@ -1,4 +1,5 @@
 import { Head } from '../../../components/Head'
+import { Snacks } from '../../../components/Snacks'
 import { SnackTitle } from '../../../components/SnackTitle'
 
 import {} from './styles'
@@ -24,10 +25,12 @@ export default function Burgers() {
       image: 'https://i.imgur.com/B4J04AJ.jpg',
     },
   ]
+
   return (
     <>
       <Head title='Hambúrgueres' />
       <SnackTitle>Hambúrgueres</SnackTitle>
+      <Snacks snacks={data} />
     </>
   )
 }
