@@ -1,6 +1,7 @@
 import { Head } from '../../../components/Head'
 import { Snacks } from '../../../components/Snacks'
 import { SnackTitle } from '../../../components/SnackTitle'
+import { getBurgers } from '../../../services/api'
 
 import {} from './styles'
 
