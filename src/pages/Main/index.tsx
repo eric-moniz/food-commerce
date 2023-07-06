@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 
 import { SideBar } from '../../components/SideBar'
+import { MyOrder } from '../../components/MyOrder'
 
 import { Container } from './styles'
 
@@ -15,6 +16,7 @@ export default function Main() {
         <img src={logoImg} />
         <Outlet />
       </section>
+      <MyOrder />
     </Container>
   )
 }
