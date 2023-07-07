@@ -38,12 +38,12 @@ export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<Snack[]>([])
 
   function addSnackIntoCart(snack: SnackData): void {
-    // Buscar o item
+    // Procura se já existe um item snack igual
     const snackExistentInCart = cart.find(
       (item) => item.snack === snack.snack && item.id === snack.id,
     )
 
-    // Atualizar o carrinho
+    // Atualizar o carrinho caso exista um item igual
     if (snackExistentInCart) {
       const newCart = cart.map((item) => {
         if (item.id === snack.id) {
@@ -61,7 +61,7 @@ export function CartProvider({ children }: CartProviderProps) {
       return
     }
 
-    // Adicionar no carrinho
+    // Adicionar no carrinho, caso seja um item novo
     const newSnack = { ...snack, quantity: 1, subtotal: snack.price }
     const newCart = [...cart, newSnack]
 
