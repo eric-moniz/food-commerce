@@ -6,7 +6,7 @@ import minusImg from '../../../../../assets/circle-minus.svg'
 import { FaTrashAlt } from 'react-icons/fa'
 
 export function TableDesktop() {
-  const { cart, removeSnackFromCart } = useCart()
+  const { cart, removeSnackFromCart, snackCartIncrement, snackCartDecrement } = useCart()
 
   return (
     <Container>
@@ -33,11 +33,11 @@ export function TableDesktop() {
               </td>
               <td>
                 <div>
-                  <button type='button' onClick={() => console.log('decrementar snack ', item)}>
+                  <button type='button' onClick={() => snackCartDecrement(item)}>
                     <img src={minusImg} alt='Diminuir quantidade' />
                   </button>
                   <span>{`${item.quantity}`.padStart(2, '0')}</span>
-                  <button type='button' onClick={() => console.log('incrementar snack ', item)}>
+                  <button type='button' onClick={() => snackCartIncrement(item)}>
                     <img src={plusImg} alt='Aumentar quantidade' />
                   </button>
                 </div>
