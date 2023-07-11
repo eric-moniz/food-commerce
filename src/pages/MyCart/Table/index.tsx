@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useCart } from '../../../../hooks/useCart'
+import { useCart } from '../../../hooks/useCart'
 
 import { TableDesktop } from './TableDesktop'
 import { TableMobile } from './TableMobile'

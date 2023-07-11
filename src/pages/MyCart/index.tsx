@@ -1,5 +1,5 @@
-import { Head } from '../../../components/Head'
-import { OrderHeader } from '../../../components/OrderHeader'
+import { Head } from '../../components/Head'
+import { OrderHeader } from '../../components/OrderHeader'
 import { Container } from './styles'
 import { Table } from './Table'
 
