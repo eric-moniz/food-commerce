@@ -4,22 +4,12 @@ import { toast } from 'react-toastify'
 import { SnackData } from '../interfaces/SnackData'
 
 import { snackEmoji } from '../helpers/snackEmoji'
+import { useNavigate } from 'react-router-dom'
 
 interface Snack extends SnackData {
   quantity: number
   subtotal: number
 }
-
-// interface RemoveSnackFromCart {
-//   id: number
-//   snack: string
-// }
-
-// interface UpdateCartProps {
-//   id: number
-//   snack: string
-//   newQuantity: number
-// }
 
 interface CartContextProps {
   cart: Snack[]
@@ -28,6 +18,7 @@ interface CartContextProps {
   snackCartIncrement: (snack: Snack) => void
   snackCartDecrement: (snack: Snack) => void
   confirmOrder: () => void
+  payOrder: () => void
 }
 
 interface CartProviderProps {
@@ -37,6 +28,7 @@ interface CartProviderProps {
 export const CartContext = createContext({} as CartContextProps)
 
 export function CartProvider({ children }: CartProviderProps) {
+  const navigate = useNavigate()
   const [cart, setCart] = useState<Snack[]>([])
 
   function addSnackIntoCart(snack: SnackData): void {
@@ -57,7 +49,11 @@ export function CartProvider({ children }: CartProviderProps) {
         return item
       })
 
-      toast.success(`Outro(a) ${snackEmoji(snack.snack)} ${snack.name} adicionado no carrinho!`)
+      toast.success(
+        `Outro(a) ${snackEmoji(snack.snack)} ${
+          snack.name
+        } adicionado no carrinho!`,
+      )
       setCart(newCart)
 
       return
@@ -67,12 +63,16 @@ export function CartProvider({ children }: CartProviderProps) {
     const newSnack = { ...snack, quantity: 1, subtotal: snack.price }
     const newCart = [...cart, newSnack]
 
-    toast.success(`${snackEmoji(snack.snack)} ${snack.name} adicionado no carrinho!`)
+    toast.success(
+      `${snackEmoji(snack.snack)} ${snack.name} adicionado no carrinho!`,
+    )
     setCart(newCart)
   }
 
   function removeSnackFromCart(snack: Snack): void {
-    const newCart = cart.filter((item) => !(item.id === snack.id && item.snack === snack.snack))
+    const newCart = cart.filter(
+      (item) => !(item.id === snack.id && item.snack === snack.snack),
+    )
 
     setCart(newCart)
   }
@@ -87,7 +87,10 @@ export function CartProvider({ children }: CartProviderProps) {
     if (!snackExistentInCart) return
 
     const newCart = cart.map((item) => {
-      if (item.id === snackExistentInCart.id && item.snack === snackExistentInCart.snack) {
+      if (
+        item.id === snackExistentInCart.id &&
+        item.snack === snackExistentInCart.snack
+      ) {
         return {
           ...item,
           quantity: newQuantity,
@@ -110,7 +113,11 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   function confirmOrder(): void {
-    //
+    navigate('/payment')
+  }
+
+  function payOrder(): void {
+    return
   }
 
   return (
@@ -122,6 +129,7 @@ export function CartProvider({ children }: CartProviderProps) {
         snackCartIncrement,
         snackCartDecrement,
         confirmOrder,
+        payOrder,
       }}
     >
       {children}
