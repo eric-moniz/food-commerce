@@ -45,6 +45,10 @@ export function CartProvider({ children }: CartProviderProps) {
     localStorage.setItem(localStorageKey, JSON.stringify(items))
   }
 
+  function clearCart() {
+    localStorage.removeItem(localStorageKey)
+  }
+
   function addSnackIntoCart(snack: SnackData) {
     // Procura se já existe um item snack igual
     const snackExistentInCart = cart.find(
@@ -132,6 +136,9 @@ export function CartProvider({ children }: CartProviderProps) {
 
   function payOrder(customer: CustomerData) {
     console.log('payOrder', cart, customer)
+    // chamada API para o pagamento
+
+    clearCart() // deve ser executado após retorno positivo do backend
 
     return
   }
