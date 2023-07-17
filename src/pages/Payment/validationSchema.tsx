@@ -4,7 +4,6 @@ import {
   isValidPhone,
 } from '@brazilian-utils/brazilian-utils'
 import { default as isValidCreditCard } from 'card-validator'
-import { transform } from 'typescript'
 import * as yup from 'yup'
 
 export const schema = yup
