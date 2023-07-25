@@ -10,6 +10,14 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
+app.get("/", (req: Request, res: Response) => {
+  const { message } = req.body;
+
+  if (!message) return res.status(400).send({ error: "Message is required" });
+
+  res.send({ message });
+});
+
 app.get("/snacks", async (req: Request, res: Response) => {
   const { snack } = req.query;
 
@@ -25,12 +33,36 @@ app.get("/snacks", async (req: Request, res: Response) => {
   res.send({ snacks });
 });
 
-app.get("/", (req: Request, res: Response) => {
-  const { message } = req.body;
+app.get("/orders/:id", async (req: Request, res: Response) => {
+  // codigo original gera erro
+  /* const { id } = req.params;
 
-  if (!message) return res.status(400).send({ error: "Message is required" });
+  const order = await prisma.order.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
 
-  res.send({ message });
+  if (!order) return res.status(404).send({ error: "Order not found" });
+
+  res.send({ order }); */
+
+  const { id } = req.params;
+  let order;
+
+  try {
+    order = await prisma.order.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+
+  if (!order) return res.status(404).send({ error: "Order not found" });
+
+  res.send({ order });
 });
 
 app.listen(port, () => {
