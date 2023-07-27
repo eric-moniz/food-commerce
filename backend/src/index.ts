@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
+import CheckoutService from "./services/CheckoutService";
+
 import { SnackData } from "./interfaces/SnackData";
 import { CustomerData } from "./interfaces/CustomerData";
 import { PaymentData } from "./interfaces/PaymentData";
@@ -78,6 +80,9 @@ interface CheckoutRequest extends Request {
 
 app.post("/checkout", async (req: CheckoutRequest, res: Response) => {
   const { cart, customer, payment } = req.body;
+
+  const checkoutService = new CheckoutService();
+  checkoutService.process(cart, customer, payment);
 });
 
 app.listen(port, () => {
