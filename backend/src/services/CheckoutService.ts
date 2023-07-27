@@ -24,6 +24,15 @@ export default class CheckoutService {
       },
     });
 
+    const snacksInCart = snacks.map<SnackData>((snack) => ({
+      ...snack,
+      price: Number(snack.price),
+      quantity: cart.find((item) => item.id === snack.id)?.quantity!,
+      subTotal:
+        cart.find((item) => item.id === snack.id)?.quantity! *
+        Number(snack.price),
+    }));
+    console.log(`snacksInCart`, snacksInCart);
     // registrar os dados do cliente no BD
     // criar uma order
     // processar o pagamento

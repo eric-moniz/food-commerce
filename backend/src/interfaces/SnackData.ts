@@ -6,5 +6,5 @@ export interface SnackData {
   image: string;
   price: number;
   quantity: number;
-  subtotal: number;
+  subTotal: number;
 }
