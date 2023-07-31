@@ -60,6 +60,7 @@ app.get("/orders/:id", async (req: Request, res: Response) => {
       where: {
         id: parseInt(id),
       },
+      include: { customer: true, orderItems: { include: { snack: true } } },
     });
   } catch (error) {
     console.error(error);
