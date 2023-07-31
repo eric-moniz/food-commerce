@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Customer, PrismaClient } from "@prisma/client";
 import { CustomerData } from "../interfaces/CustomerData";
 import { PaymentData } from "../interfaces/PaymentData";
 import { SnackData } from "../interfaces/SnackData";
@@ -32,9 +32,22 @@ export default class CheckoutService {
         cart.find((item) => item.id === snack.id)?.quantity! *
         Number(snack.price),
     }));
-    console.log(`snacksInCart`, snacksInCart);
+
     // registrar os dados do cliente no BD
+    const customerCreated = await this.createCustomer(customer);
+    console.log(`customerCreated`, customerCreated);
+
     // criar uma order
     // processar o pagamento
+  }
+
+  private async createCustomer(customer: CustomerData): Promise<Customer> {
+    const customerCreated = await this.prisma.customer.upsert({
+      where: { email: customer.email },
+      update: customer,
+      create: customer,
+    });
+
+    return customerCreated;
   }
 }
