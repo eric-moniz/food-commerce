@@ -6,11 +6,8 @@ import { SnackData } from '../interfaces/SnackData'
 import { snackEmoji } from '../helpers/snackEmoji'
 import { useNavigate } from 'react-router-dom'
 import { CustomerData } from '../interfaces/CustomerData'
-
-interface Snack extends SnackData {
-  quantity: number
-  subtotal: number
-}
+import { Snack } from '../interfaces/Snack'
+import { processCheckout } from '../services/api'
 
 interface CartContextProps {
   cart: Snack[]
@@ -134,11 +131,24 @@ export function CartProvider({ children }: CartProviderProps) {
     navigate('/payment')
   }
 
-  function payOrder(customer: CustomerData) {
-    console.log('payOrder', cart, customer)
-    // chamada API para o pagamento
+  async function payOrder(customer: CustomerData) {
+    try {
+      const response = await processCheckout(cart, customer)
 
-    clearCart() // deve ser executado após retorno positivo do backend
+      if (response.data.status !== 'PAID') {
+        toast.error(
+          'Erro ao processar o pagamento, por favor, tente novamente mais tarde.',
+        )
+        return
+      }
+
+      clearCart() // deve ser executado após retorno positivo do backend
+
+      navigate(`/order/success/${response.data.id}`)
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao processar o pedido')
+    }
 
     return
   }
